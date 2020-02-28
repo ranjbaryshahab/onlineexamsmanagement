@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Help Desk</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/panels/manager-panel/css/manager-panel.css">
+</head>
+<body>
+<div class="app-container">
+    <div class="app-top-menu">
+        <div class="app-brand-box">
+            <div class="app-brand-title">
+                HELP DESK
+            </div>
+        </div>
+    </div>
+    <div class="app-side-bar">
+        <div class="menu">Incidents</div>
+        <ul class="menu-ul">
+            <li class="menu-li" onclick="loadPage('list-incident-by-employee')">Employee Incidents</li>
+            <li class="menu-li">Item 1.2</li>
+            <li class="menu-li">Item 1.3</li>
+        </ul>
+        <div class="menu">Menu 2</div>
+        <ul class="menu-ul">
+            <li class="menu-li">Item 2.1</li>
+            <li class="menu-li">Item 2.2</li>
+            <li class="menu-li">Item 2.3</li>
+        </ul>
+    </div>
+    <div class="app-content">
+        <div class="app-content-load" id="app-content-load"></div>
+    </div>
+</div>
+<script src="/assets/js/jquery-3.4.1.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/panels/manager-panel/js/manager-panel.js"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -22,9 +23,12 @@ import java.util.Collections;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     final MyUserDetailsService userDetailsService;
+    final AuthenticationSuccessHandler authenticationSuccessHandler;
 
-    public SecurityConfiguration(MyUserDetailsService userDetailsService) {
+
+    public SecurityConfiguration(MyUserDetailsService userDetailsService, AuthenticationSuccessHandler authenticationSuccessHandler) {
         this.userDetailsService = userDetailsService;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
 
 
@@ -41,19 +45,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
+                .authorizeRequests()
+                .antMatchers(
+                        "/assets/**",
+                        "/modules/user-management/features/account-management/register-account-by-guest/**",
+                        "/modules/user-management/features/account-management/login-to-account-by-user/js/login-to-account-by-user.js")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/modules/user-management/features/account-management/login-to-account-by-user/login-to-account-by-user.html")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
+                .and()
                 .cors()
                 .and()
                 .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/index.html", "/register").permitAll()
-                .antMatchers(HttpMethod.GET).permitAll() // permit all html, css, js
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .formLogin().disable()
-                .logout().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         ;
     }
 
